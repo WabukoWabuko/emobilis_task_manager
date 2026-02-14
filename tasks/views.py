@@ -12,3 +12,6 @@ class TaskViewSet(viewsets.ModelViewSet):
     # At this point we instruct the serializer on what  to use to parse the data.
     serializer_id = TaskSerializer
     serializer_class = TaskSerializer
+
+def index(request):
+    return render(request, 'tasks/index.html')
