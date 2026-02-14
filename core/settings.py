@@ -122,3 +122,10 @@ STATIC_URL = 'static/'
 
 # Down here are the additional settings
 CORS_ALL_ALL_ORIGINS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}

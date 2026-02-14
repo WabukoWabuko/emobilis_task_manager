@@ -1,17 +1,18 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from tasks.models import Task
-from tasks.serializers import TaskSerializer
+from django.shortcuts import render, redirect
+from .models import Task
 
-
-# Create your views here.
-class TaskViewSet(viewsets.ModelViewSet):
-    # This helps in telling the DRF on which data to retrieve from the database
-    queryset = Task.objects.all().order_by("-created_at")
-
-    # At this point we instruct the serializer on what  to use to parse the data.
-    serializer_id = TaskSerializer
-    serializer_class = TaskSerializer
 
 def index(request):
-    return render(request, 'tasks/index.html')
+    # Fetch all tasks from the DB
+    tasks = Task.objects.all().order_by('-created_at')
+
+    # Pass them to the template in a dictionary
+    return render(request, 'tasks/index.html', {'tasks': tasks})
+
+
+def add_task_jinja(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        if title:
+            Task.objects.create(title=title)
+    return redirect('home')
